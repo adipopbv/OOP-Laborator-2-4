@@ -2,9 +2,11 @@
 
 typedef struct
 {
-	char name[20];
-	char supplier[20];
+	char* name;
+	char* supplier;
 	int quantity;
 } Stock;
 
 Stock MakeStock(char *name, char *supplier, int quantity);
+
+void DeconstructStock(Stock* stock);
