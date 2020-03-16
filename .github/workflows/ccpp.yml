@@ -1,0 +1,21 @@
+name: C/C++ workflow
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    error checking:
+        name: error checking
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: compiling
+              working-directory: ../..
+              run: gcc -Wall `find . -type f -name \*.c` -o app
+            - name: running
+              working-directory: ../..
+              run: ./app
