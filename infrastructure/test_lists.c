@@ -9,8 +9,8 @@ void test_Append()
 	List list = MakeList();
 	Stock stock = MakeStock("ceva", "cineva", 12);
 	Append(&list, stock);
-	//Stock listStock = list.values[0];
 	assert(strcmp(list.values[0].name, stock.name) == 0);
+	DeconstructList(&list);
 }
 
 void test_GetFromIndex()
@@ -19,6 +19,7 @@ void test_GetFromIndex()
 	Stock stock = MakeStock("ceva", "cineva", 12);
 	Append(&list, stock);
 	assert(strcmp(GetFromIndex(&list, 0).name, stock.name) == 0);
+	DeconstructList(&list);
 }
 
 void test_GetStock()
@@ -30,6 +31,7 @@ void test_GetStock()
 	assert(strcmp(new->name, stock.name) == 0);
 	new = (Stock*)GetStock(&list, "cv");
 	assert(new == NULL);
+	DeconstructList(&list);
 }
 
 void test_Delete()
@@ -41,11 +43,14 @@ void test_Delete()
 	Stock *new = (Stock*)GetStock(&list, "ceva");
 	assert(strcmp(new->name, stock.name) == 0);
 	Delete(&list, stock);
+	DeconstructStock(&stock);
 	new = (Stock*)GetStock(&list, "ceva");
 	assert(new == NULL);
 	Delete(&list, stock2);
 	new = (Stock*)GetStock(&list, "lala");
 	assert(new == NULL);
+	DeconstructList(&list);
+	DeconstructStock(&stock2);
 }
 
 void RunAllListTests()

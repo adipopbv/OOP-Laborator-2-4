@@ -78,7 +78,7 @@ List NameStartsWithLetter(List *list, char letter)
 	 * returns: list of stock
 	 */
 	List listTemp = MakeList();
-	for (int i=0; i<list->length; i++)
+	for (int i=0; i<list->currentLength; i++)
 		if (letter == list->values[i].name[0])
 			Append(&listTemp, list->values[i]);
 	return listTemp;
@@ -95,7 +95,7 @@ List MaximumQuantity(List *list, int number)
 	 * returns: list of stock
 	 */
 	List listTemp = MakeList();
-	for (int i=0; i<list->length; i++)
+	for (int i=0; i<list->currentLength; i++)
 		if (number > list->values[i].quantity)
 			Append(&listTemp, list->values[i]);
 	return listTemp;
@@ -112,9 +112,9 @@ List OrderByName(List *list, int order)
 	 * returns: list of stock
 	 */
 	List *listTemp = list;
-	for (int i=0; i<listTemp->length-1; i++)
+	for (int i=0; i<listTemp->currentLength-1; i++)
 	{
-		for (int j=i+1; j<listTemp->length; j++)
+		for (int j=i+1; j<listTemp->currentLength; j++)
 		{
 			if (strcmp(listTemp->values[i].name, listTemp->values[j].name) * order > 0)
 			{
@@ -138,9 +138,9 @@ List OrderByQuantity(List *list, int order)
 	 * returns: list of stock
 	 */
 	List *listTemp = list;
-	for (int i=0; i<listTemp->length-1; i++)
+	for (int i=0; i<listTemp->currentLength-1; i++)
 	{
-		for (int j=i+1; j<listTemp->length; j++)
+		for (int j=i+1; j<listTemp->currentLength; j++)
 		{
 			if ((listTemp->values[i].quantity - listTemp->values[j].quantity) * order > 0)
 			{

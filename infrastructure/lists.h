@@ -3,8 +3,8 @@
 
 typedef struct
 {
-	Stock values[100];
-	int length;
+	Stock* values;
+	int maxLength, currentLength;
 } List;
 
 List MakeList();
@@ -16,3 +16,5 @@ Stock GetFromIndex(List* list, int index);
 void* GetStock(List *list, char *name);
 
 void Delete(List *list, Stock stock);
+
+void DeconstructList(List* list);
