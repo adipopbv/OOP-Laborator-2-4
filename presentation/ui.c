@@ -134,12 +134,12 @@ void RunUI()
 				printf("  Please input a letter: ");
 				fgets(text, 256, stdin);
 				List listTemp = NameStartsWithLetter(&stockList, text[0]);
-				if (listTemp.length == 0)
+				if (listTemp.currentLength == 0)
 					printf("No item found!\n");
 				else
 				{
 					printf("\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-					for (int i=0; i<listTemp.length; i++)
+					for (int i=0; i<listTemp.currentLength; i++)
 						PrintStock(listTemp.values[i]);
 					printf("\n");
 				}
@@ -150,12 +150,12 @@ void RunUI()
 				fgets(text, 256, stdin);
 				int number = atoi(text);
 				List listTemp = MaximumQuantity(&stockList, number);
-				if (listTemp.length == 0)
+				if (listTemp.currentLength == 0)
 					printf("No item found!\n");
 				else
 				{
 					printf("\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-					for (int i=0; i<listTemp.length; i++)
+					for (int i=0; i<listTemp.currentLength; i++)
 						PrintStock(listTemp.values[i]);
 					printf("\n");
 				}
@@ -176,7 +176,7 @@ void RunUI()
 				int order = atoi(text);
 				List listTemp = OrderByName(&stockList, order);
 				printf("\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-				for (int i=0; i<listTemp.length; i++)
+				for (int i=0; i<listTemp.currentLength; i++)
 					PrintStock(listTemp.values[i]);
 				printf("\n");
 			}
@@ -187,12 +187,15 @@ void RunUI()
 				int order = atoi(text);
 				List listTemp = OrderByQuantity(&stockList, order);
 				printf("\n~~~~~~~~~~~~~~~~~~~~~~~~\n");
-				for (int i=0; i<listTemp.length; i++)
+				for (int i=0; i<listTemp.currentLength; i++)
 					PrintStock(listTemp.values[i]);
 				printf("\n");
 			}
 		}
 		else if (command == 6)
+		{
+			DeconstructList(&stockList);		
 			return;
+		}
 	}
 }

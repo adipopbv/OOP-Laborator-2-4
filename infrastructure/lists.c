@@ -1,6 +1,7 @@
 #include "lists.h"
 #include "../domain/entities.h"
 #include <string.h>
+#include <stdlib.h>
 
 List MakeList()
 {
@@ -10,7 +11,9 @@ List MakeList()
 	 * returns: list instance
 	 */
 	List temp;
-	temp.length = 0;
+	temp.currentLength = 0;
+	temp.maxLength = 1;
+	temp.values = (Stock*)malloc(sizeof(Stock)*temp.maxLength);
 	return temp;
 }
 
@@ -21,7 +24,16 @@ void Append(List* list, Stock stock)
 	 *
 	 * returns: nothing
 	 */
-	list->values[list->length++] = stock;
+	if (list->currentLength >= list->maxLength)
+	{
+		int newLength = list->currentLength * 2;
+		Stock* newValues = (Stock*)malloc(sizeof(Stock)*newLength);
+		memcpy(newValues, list->values, list->currentLength * sizeof(Stock));
+		list->maxLength = newLength;
+		free(list->values);
+		list->values = newValues;
+	}
+	list->values[list->currentLength++] = stock;
 }
 
 Stock GetFromIndex(List* list, int index)
@@ -47,7 +59,7 @@ void* GetStock(List *list, char *name)
 	 *
 	 * returs: an instance tho the stock or NULL
 	 */
-	for (int i=0; i<list->length; i++)
+	for (int i=0; i<list->currentLength; i++)
 		if (strcmp(name, list->values[i].name) == 0)
 			return &list->values[i];
 	return NULL;
@@ -64,12 +76,21 @@ void Delete(List *list, Stock stock)
 	 * returns: nothing
 	 */
 	int index = -1;
-	for (int i=0; i<list->length; i++)
+	for (int i=0; i<list->currentLength; i++)
 		if (strcmp(stock.name, list->values[i].name) == 0)
 			index = i;
 	if (index == -1)
 		return;
-	for (int i=index; i<list->length-1; i++)
+	for (int i=index; i<list->currentLength-1; i++)
 		list->values[i] = list->values[i+1];
-	list->length--;
+	list->currentLength--;
+}
+
+void DeconstructList(List* list)
+{
+	for (int i=0; i<list->currentLength; i++)
+		DeconstructStock(&list->values[i]);
+	free(list->values);
+	list->values = NULL;
+	list->currentLength = list->maxLength = 0;
 }
